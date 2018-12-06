@@ -5,7 +5,6 @@
  */
 package br.edu.ifrn.web.bean;
 
-;
 import br.edu.ifrn.web.controle.AlunoControle;
 import br.edu.ifrn.web.modelo.Aluno;
 import javax.enterprise.inject.Model;
@@ -77,7 +76,7 @@ public class AlunoBean {
     
 
 public String salvarAluno(){
-   String path = "/alunos/"  + fotoaluno.getSubmittedFileName() ;
+   String path = "/aluno/"  ;
    String mensagem;
    if(alunomodel.getId() != null){
        alunoDao.atualizar(alunomodel);

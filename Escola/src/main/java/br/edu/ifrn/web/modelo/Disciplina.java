@@ -6,12 +6,10 @@
 package br.edu.ifrn.web.modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -24,8 +22,7 @@ public class Disciplina implements Serializable{
     private Integer id;
     private String nomeDis;
     private long cargHor;
-    @ManyToOne
-    private List<Disciplina> dependencias;
+    
 
     public int getId() {
         return id;
@@ -52,16 +49,6 @@ public class Disciplina implements Serializable{
     public void setCargHor(long cargHor) {
         this.cargHor = cargHor;
     }
-
-    public List<Disciplina> getDependencias() {
-        return dependencias;
-    }
-
-    public void setDependencias(List<Disciplina> dependencias) {
-        this.dependencias = dependencias;
-    }
-    
-    
     
     
     
