@@ -5,10 +5,33 @@
  */
 package br.edu.ifrn.web.controle;
 
+
+import br.edu.ifrn.web.modelo.Curso;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 /**
  *
- * @author beatriz
+ * @author yuri
  */
 public class CursoControle {
+    
+
+    @PersistenceContext
+    private EntityManager entityManeger;
+
+    @Transactional
+    public void salvar(Curso curso) {
+        entityManeger.persist(curso);
+    }
+    @Transactional
+    public void atualizar (Curso curso) {
+        entityManeger.merge(curso);
+    }
+    
+    public void excluir(Curso curso){
+        entityManeger.remove(curso);
+    }
     
 }
