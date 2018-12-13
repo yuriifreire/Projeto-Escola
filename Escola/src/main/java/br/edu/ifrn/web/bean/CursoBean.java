@@ -7,83 +7,114 @@ package br.edu.ifrn.web.bean;
 
 import br.edu.ifrn.web.controle.CursoControle;
 import br.edu.ifrn.web.modelo.Curso;
+import java.util.List;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-
 /**
  *
- * @author yuri
+ * @author beatriz
  */
-
 @Model
 public class CursoBean {
-    
-   
 
     @Inject
-    private CursoControle cursoDao;
+    private CursoControle cursoDAO;
     @Inject
     private Curso cursomodel;
     @Inject
     private FacesContext facesContext;
     
-    private int idbean;
+    private List<Curso> listaCurso;
 
-        public CursoControle getCursoDao() {
-            return cursoDao;
-        }
+    private Integer idbeanCurso;
 
-        public void setCursoDao(CursoControle cursoDao) {
-            this.cursoDao = cursoDao;
-        }
+    public CursoControle getCursoDAO() {
+        return cursoDAO;
+    }
 
-        public Curso getCursomodel() {
-            return cursomodel;
-        }
+    public void setCursoDAO(CursoControle cursoDAO) {
+        this.cursoDAO = cursoDAO;
+    }
 
-        public void setCursomodel(Curso cursomodel) {
-            this.cursomodel = cursomodel;
-        }
+    public Curso getCursomodel() {
+        return cursomodel;
+    }
 
-        public FacesContext getFacesContext() {
-            return facesContext;
-        }
+    public void setCursomodel(Curso cursomodel) {
+        this.cursomodel = cursomodel;
+    }
 
-        public void setFacesContext(FacesContext facesContext) {
-            this.facesContext = facesContext;
-        }
+    public FacesContext getFacesContext() {
+        return facesContext;
+    }
 
-        public int getIdbean() {
-            return idbean;
-        }
+    public void setFacesContext(FacesContext facesContext) {
+        this.facesContext = facesContext;
+    }
 
-        public void setIdbean(int idbean) {
-            this.idbean = idbean;
+    public Integer getIdbeanCurso() {
+        return idbeanCurso;
+    }
+
+    public void setIdbeanCurso(Integer idbeanCurso) {
+        this.idbeanCurso = idbeanCurso;
+    }
+
+    public List<Curso> getListaCurso() {
+        return listaCurso;
+    }
+
+    public void setListaCurso(List<Curso> listaCurso) {
+        this.listaCurso = listaCurso;
+    }
+    
+    
+
+    public String salvarCurso() {
+        String path = "/curso/";
+        String mensagem;
+
+        if (cursomodel.getId() != null) {
+            cursoDAO.atualizar(cursomodel);
+            mensagem = "Curso Atuaizado com sucesso";
+        } else {
+            cursoDAO.salvarCurso(cursomodel);
+            mensagem = "Curso Salvo com sucesso";
         }
-   
-        
-   public String salvarCurso(){
-   String path = "/curso/"  ;
-   String mensagem;
-   
-   
-   /* Bea, verificar o porque não está conseguindo encontrar o atualizar
-   if(cursomodel.getId()!= null){
-       cursoDao.atualizar(cursomodel);
-       mensagem = "Curso salvo com suceso";
-   }else{
-       cursoDao.salvar(cursomodel);
-       mensagem = "Curso salvo com sucesso";
-   }*/
-   
-   cursomodel = new Curso();
-   facesContext.getExternalContext().getFlash().setKeepMessages(true);
-   facesContext.addMessage(null,new FacesMessage(mensagem));
-   
-   return "curso.xhtml";
-}
+        facesContext.getExternalContext().getFlash().setKeepMessages(true);
+        facesContext.addMessage(null, new FacesMessage(mensagem));
+        return "curso.xhtml";
+    }
+    
+    public void excluir(Curso curso) {
+        cursoDAO.excluir(curso);
+        cursoDAO = null;
+    }
+
+    public List<Curso> listarCurso() {
+        if (listaCurso == null) {
+            listaCurso = cursoDAO.listar();
+        }
+        return listaCurso;
+    }
+    
+    
+    public String atualizar(Integer id){
+        return "curso.xhtml?id=" + String.valueOf(id);
+    }
+    
+    
+    public void carregarLivro(){
+        if (idbeanCurso != null){
+            Curso curso = cursoDAO.buscar(idbeanCurso);
+            if (curso != null){
+                this.cursomodel = curso;
+                return;
+            }
+        }             
+    }
 
 }

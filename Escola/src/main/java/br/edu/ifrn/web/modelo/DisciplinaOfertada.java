@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -25,18 +26,22 @@ public class DisciplinaOfertada implements Serializable {
     private Integer id;
     @OneToOne
     private Disciplina disciplina;
-    @OneToOne
+    @ManyToOne
     private  Professor professor;
     @OneToMany
     private List<Aluno> aluno;
+    @ManyToOne
+    private Turma turma;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
+
+    
 
     public Disciplina getDisciplina() {
         return disciplina;
@@ -61,6 +66,15 @@ public class DisciplinaOfertada implements Serializable {
     public void setAluno(List<Aluno> aluno) {
         this.aluno = aluno;
     }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+    
     
     
 }
